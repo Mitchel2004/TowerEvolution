@@ -22,11 +22,11 @@ public class EnemyMovement : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, waypoints[index].position, speed * Time.deltaTime);
         transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, waypoints[index].position - transform.position, speed * 2 * Time.deltaTime, 0f));
 
-        if (Vector3.Distance(transform.position, waypoints[waypoints.Count - 1].position) <= 0)
+        if (Vector3.Distance(transform.position, waypoints[waypoints.Count - 1].position) <= 0.001f)
         {
             Destroy(gameObject);
         }
-        else if (Vector3.Distance(transform.position, waypoints[index].position) <= 0)
+        else if (Vector3.Distance(transform.position, waypoints[index].position) <= 0.001f)
         {
             index++;
         }
