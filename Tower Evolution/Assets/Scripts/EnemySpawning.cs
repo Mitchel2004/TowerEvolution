@@ -4,42 +4,38 @@ using UnityEngine;
 
 public class EnemySpawning : MonoBehaviour
 {
-    [SerializeField] GameObject enemy;
-    private string spawnedEnemyName;
+    [SerializeField] private GameObject enemy;
+    
+    [SerializeField] private int spawnAmount = 4;
+    [SerializeField] private int spawnAmountIncrement = 2;
+    private int enemiesToSpawn;
 
     [SerializeField] private float spawnInterval = 1f;
-    [SerializeField] private int spawnAmount = 4;
-    [SerializeField] int spawnAmountIncrement = 2;
-    private int spawnedAmount;
-
+    private float instantiateTimer;
+    
     void Start()
     {
-        if (!GameObject.Find(spawnedEnemyName))
-        {
-            spawnedAmount = spawnAmount;
-            StartCoroutine(SpawnEnemy());
-        }
+        enemiesToSpawn = spawnAmount;
+        instantiateTimer = spawnInterval;
     }
 
     void Update()
     {
-        if (!GameObject.Find(spawnedEnemyName))
+        if (enemiesToSpawn > 0)
+        {
+            instantiateTimer -= Time.deltaTime;
+
+            if (instantiateTimer <= 0)
+            {
+                Instantiate(enemy, gameObject.transform);
+                enemiesToSpawn--;
+                instantiateTimer = spawnInterval;
+            }
+        }
+        else if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
         {
             spawnAmount += spawnAmountIncrement;
-            spawnedAmount = spawnAmount;
-            StartCoroutine(SpawnEnemy());
-        }
-    }
-
-    IEnumerator SpawnEnemy()
-    {
-        while (spawnedAmount > 0)
-        {
-            yield return new WaitForSeconds(spawnInterval);
-
-            GameObject spawnedEnemy = Instantiate(enemy, gameObject.transform);
-            spawnedEnemyName = spawnedEnemy.name;
-            spawnedAmount--;
+            enemiesToSpawn = spawnAmount;
         }
     }
 }
