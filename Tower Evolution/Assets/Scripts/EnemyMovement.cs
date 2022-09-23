@@ -7,7 +7,9 @@ public class EnemyMovement : MonoBehaviour
     private List<Transform> waypoints = new List<Transform>();
     private int index = 0;
 
-    [SerializeField] private float speed = 2f;
+    public Quaternion startRotation;
+
+    [SerializeField] public float speed = 2f;
 
     void Start()
     {
@@ -15,6 +17,9 @@ public class EnemyMovement : MonoBehaviour
         {
             waypoints.Add(waypoint.transform);
         }
+
+        startRotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, waypoints[0].position - transform.position, 1000 * Time.deltaTime, 0f));
+        transform.rotation = startRotation;
     }
 
     void Update()
@@ -24,7 +29,8 @@ public class EnemyMovement : MonoBehaviour
 
         if (Vector3.Distance(transform.position, waypoints[waypoints.Count - 1].position) <= 0.001f)
         {
-            Destroy(gameObject);
+            index = 0;
+            gameObject.SetActive(false);
         }
         else if (Vector3.Distance(transform.position, waypoints[index].position) <= 0.001f)
         {

@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d074b99ebb1cd4680b565cd895a39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints: []
+  startRotation: {x: 0, y: 0, z: 0, w: 0}
   speed: 2
 --- !u!1 &1528902053759821976
 GameObject:

@@ -5,37 +5,85 @@ using UnityEngine;
 public class EnemySpawning : MonoBehaviour
 {
     [SerializeField] private GameObject enemy;
-    
-    [SerializeField] private int spawnAmount = 4;
-    [SerializeField] private int spawnAmountIncrement = 2;
-    private int enemiesToSpawn;
+    private GameObject enemyReadyToSpawn;
 
+    private List<GameObject> enemyPool = new List<GameObject>();
+    private List<Transform> routepoints = new List<Transform>();
+
+    private float walkDistance;
+    private int poolSize;
+
+    [SerializeField] private int enemiesToSpawn = 4;
+    [SerializeField] private int enemiesToAdd = 2;  
     [SerializeField] private float spawnInterval = 1f;
-    private float instantiateTimer;
-    
+
+    private bool needToSpawn = true;
+    private int currentWave = 0;
+
     void Start()
     {
-        enemiesToSpawn = spawnAmount;
-        instantiateTimer = spawnInterval;
+        routepoints.Add(gameObject.transform);
+
+        foreach (GameObject waypoint in GameObject.FindGameObjectsWithTag("Waypoint"))
+        {
+            routepoints.Add(waypoint.transform);
+        }
+
+        for (int i = 0; i < routepoints.Count - 1; i++)
+        {
+            walkDistance += Vector3.Distance(routepoints[i].position, routepoints[i + 1].position);
+        }
+
+        poolSize = Mathf.CeilToInt(walkDistance / enemy.GetComponent<EnemyMovement>().speed / spawnInterval + 1);
+
+        for (int i = 0; i < poolSize; i++)
+        {
+            enemyPool.Add(Instantiate(enemy, gameObject.transform));
+            enemyPool[i].SetActive(false);
+        }
+
+        enemiesToSpawn -= enemiesToAdd;
     }
 
     void Update()
-    {
-        if (enemiesToSpawn > 0)
+    {   
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0 && needToSpawn)
         {
-            instantiateTimer -= Time.deltaTime;
+            needToSpawn = false;
+            currentWave++;
+            enemiesToSpawn += enemiesToAdd;
+            StartCoroutine(SpawnEnemies());
+        }
+    }
 
-            if (instantiateTimer <= 0)
+    GameObject GetInactiveEnemy()
+    {
+        for (int i = 0; i < poolSize; i++)
+        {
+            if (!enemyPool[i].activeInHierarchy)
             {
-                Instantiate(enemy, gameObject.transform);
-                enemiesToSpawn--;
-                instantiateTimer = spawnInterval;
+                return enemyPool[i];
             }
         }
-        else if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+
+        return null;
+    }
+
+    IEnumerator SpawnEnemies()
+    {
+        for (int i = 0; i < enemiesToSpawn; i++)
         {
-            spawnAmount += spawnAmountIncrement;
-            enemiesToSpawn = spawnAmount;
+            enemyReadyToSpawn = GetInactiveEnemy();
+
+            if (enemyReadyToSpawn != null)
+            {
+                yield return new WaitForSeconds(spawnInterval);
+                enemyReadyToSpawn.transform.position = gameObject.transform.position;
+                enemyReadyToSpawn.transform.rotation = enemyReadyToSpawn.GetComponent<EnemyMovement>().startRotation;
+                enemyReadyToSpawn.SetActive(true);
+            }
         }
+
+        needToSpawn = true;
     }
 }
