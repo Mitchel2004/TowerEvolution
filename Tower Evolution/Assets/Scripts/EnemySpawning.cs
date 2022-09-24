@@ -79,7 +79,7 @@ public class EnemySpawning : MonoBehaviour
             {
                 yield return new WaitForSeconds(spawnInterval);
                 enemyReadyToSpawn.transform.position = gameObject.transform.position;
-                enemyReadyToSpawn.transform.rotation = enemyReadyToSpawn.GetComponent<EnemyMovement>().startRotation;
+                enemyReadyToSpawn.transform.rotation = enemy.GetComponent<EnemyMovement>().startRotation;
                 enemyReadyToSpawn.SetActive(true);
             }
         }

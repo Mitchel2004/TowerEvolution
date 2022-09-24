@@ -1,54 +1,45 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TowerPlacement : MonoBehaviour
 {
-    [SerializeField] private GameObject map;
-    [SerializeField] private GameObject tower;
+    private Collider gameRange;
 
     private Vector3 mousePosition;
     private Vector3 placePosition;
 
-    public Collider[] hitColliders;
-
     void Start()
     {
-        
+        gameRange = GameObject.Find("Game Range").GetComponent<Collider>();
     }
 
     void Update()
     {
         mousePosition = Input.mousePosition;
-        placePosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.transform.position.y));
+        placePosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.transform.position.y - GetComponent<Renderer>().bounds.extents.y));
 
-        hitColliders = Physics.OverlapSphere(placePosition, 1f);
+        transform.position = placePosition;
 
-        //foreach (Collider collider in hitColliders)
-        //{
-        //    Debug.Log(tower.GetComponent<Renderer>().bounds.extents.x);
-
-        //    if (collider == map.GetComponent<Collider>())
-        //    {
-        //        mapCollider = collider;
-        //    }
-        //}
-
-        if (Array.Exists(hitColliders, collider => map.GetComponent<Collider>() && tower.GetComponent<Collider>()))
+        if (Input.GetMouseButtonUp(0))
         {
-            tower.SetActive(true);
+            GetComponent<TowerPlacement>().enabled = false;
         }
-        else
-        {
-            tower.SetActive(false);
-        }
-
-        tower.transform.position = placePosition;
     }
 
-    public void Drag()
+    void OnTriggerEnter(Collider other)
     {
-        tower = Instantiate(tower);
+        if (other == gameRange)
+        {
+            GetComponent<Renderer>().enabled = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other == gameRange)
+        {
+            GetComponent<Renderer>().enabled = false;
+        }
     }
 }
