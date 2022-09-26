@@ -1,0 +1,31 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+
+public class ShopTransitioning : MonoBehaviour
+{
+    private Animator shopTransitioning;
+    private bool isClosed = true;
+
+    void Start()
+    {
+        shopTransitioning = GameObject.Find("Shop Background").GetComponent<Animator>();
+    }
+
+    public void TransitionShop()
+    {
+        if (isClosed)
+        {
+            shopTransitioning.SetTrigger("open");
+            GetComponentInChildren<TextMeshProUGUI>().text = "Close";
+            isClosed = false;
+        }
+        else
+        {
+            shopTransitioning.SetTrigger("close");
+            GetComponentInChildren<TextMeshProUGUI>().text = "Shop";
+            isClosed = true;
+        }
+    }
+}

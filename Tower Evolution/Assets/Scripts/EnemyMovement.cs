@@ -29,6 +29,7 @@ public class EnemyMovement : MonoBehaviour
 
         if (Vector3.Distance(transform.position, waypoints[waypoints.Count - 1].position) <= 0.001f)
         {
+            GameObject.Find("Health Bar").GetComponent<PlayerHealth>().playerHealth -= 1;
             index = 0;
             gameObject.SetActive(false);
         }

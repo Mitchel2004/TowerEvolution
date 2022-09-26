@@ -20,10 +20,15 @@ public class TowerPlacement : MonoBehaviour
         placePosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.transform.position.y - GetComponent<Renderer>().bounds.extents.y));
 
         transform.position = placePosition;
-
+        
         if (Input.GetMouseButtonUp(0))
         {
             GetComponent<TowerPlacement>().enabled = false;
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            Destroy(gameObject);
         }
     }
 

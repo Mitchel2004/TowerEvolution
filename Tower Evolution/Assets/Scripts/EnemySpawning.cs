@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemySpawning : MonoBehaviour
 {
@@ -46,13 +47,20 @@ public class EnemySpawning : MonoBehaviour
     }
 
     void Update()
-    {   
+    {
         if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0 && needToSpawn)
         {
             needToSpawn = false;
             currentWave++;
             enemiesToSpawn += enemiesToAdd;
+            GameObject.Find("Wave & Enemies").GetComponent<TextMeshProUGUI>().text = $"Wave: {currentWave}\nEnemies: {enemiesToSpawn}";
             StartCoroutine(SpawnEnemies());
+        }
+
+        if (enemiesToSpawn == 1000000000)
+        {
+            enemiesToAdd = 0;
+            Debug.Log("Maximum Amount of Enemies Reached");
         }
     }
 
