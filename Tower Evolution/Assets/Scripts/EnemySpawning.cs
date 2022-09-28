@@ -23,7 +23,7 @@ public class EnemySpawning : MonoBehaviour
 
     void Start()
     {
-        routepoints.Add(gameObject.transform);
+        routepoints.Add(transform);
 
         foreach (GameObject waypoint in GameObject.FindGameObjectsWithTag("Waypoint"))
         {
@@ -39,7 +39,7 @@ public class EnemySpawning : MonoBehaviour
 
         for (int i = 0; i < poolSize; i++)
         {
-            enemyPool.Add(Instantiate(enemy, gameObject.transform));
+            enemyPool.Add(Instantiate(enemy, transform));
             enemyPool[i].SetActive(false);
         }
 
@@ -86,7 +86,7 @@ public class EnemySpawning : MonoBehaviour
             if (enemyReadyToSpawn != null)
             {
                 yield return new WaitForSeconds(spawnInterval);
-                enemyReadyToSpawn.transform.position = gameObject.transform.position;
+                enemyReadyToSpawn.transform.position = transform.position;
                 enemyReadyToSpawn.transform.rotation = enemy.GetComponent<EnemyMovement>().startRotation;
                 enemyReadyToSpawn.SetActive(true);
             }

@@ -6,7 +6,8 @@ TagManager:
   tags:
   - Waypoint
   - Enemy
-  - Spawnpoint
+  - Tower
+  - Path
   layers:
   - Default
   - TransparentFX
