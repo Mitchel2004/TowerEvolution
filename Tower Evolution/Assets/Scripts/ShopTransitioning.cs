@@ -17,15 +17,25 @@ public class ShopTransitioning : MonoBehaviour
     {
         if (isClosed)
         {
+            isClosed = false;
             shopTransitioning.SetTrigger("open");
             GetComponentInChildren<TextMeshProUGUI>().text = "Close";
-            isClosed = false;
+            
+            foreach (GameObject tower in GameObject.FindGameObjectsWithTag("Tower"))
+            {
+                tower.GetComponent<TowerUpgrading>().enabled = true;
+            }
         }
         else
         {
+            isClosed = true;
             shopTransitioning.SetTrigger("close");
             GetComponentInChildren<TextMeshProUGUI>().text = "Shop";
-            isClosed = true;
+
+            foreach (GameObject tower in GameObject.FindGameObjectsWithTag("Tower"))
+            {
+                tower.GetComponent<TowerUpgrading>().enabled = false;
+            }
         }
     }
 }

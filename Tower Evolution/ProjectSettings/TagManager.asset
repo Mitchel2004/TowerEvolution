@@ -8,11 +8,13 @@ TagManager:
   - Enemy
   - Tower
   - Path
+  - Unspawned Tower
+  - Spawnpoint
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Tower
   - Water
   - UI
   - 

@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 9105916727712722110}
   - component: {fileID: 8296869488375733673}
   - component: {fileID: 9105916727712722111}
+  - component: {fileID: -2934537086739505175}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Unspawned Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,7 +96,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 5, y: 1, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8296869488375733673
 Rigidbody:
@@ -126,3 +127,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  price: 0
+--- !u!114 &-2934537086739505175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9105916727712722080}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13fde353fd617b94aaa61f0ea5b7496e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 8676422847330953491, guid: dbc7424aee4d91f4bb88814b82520298, type: 3}
+  poolSize: 10
+  spawnInterval: 0.5

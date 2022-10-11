@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class TowerPlacement : MonoBehaviour
 {
     private Collider gameRange;
+    [SerializeField] private Material towerRangeCircle;
 
     private Vector3 mousePosition;
     private Vector3 placePosition;
 
-    private bool isInGame = false;
     private bool rendererEnabled = false;
+
+    public Renderer[] renderers;
+    private List<Collider> colliders = new List<Collider>();
+
     private bool isInGameRange = false;
     private bool canPlace = true;
 
@@ -22,6 +25,7 @@ public class TowerPlacement : MonoBehaviour
     void Start()
     {
         gameRange = GameObject.Find("Game Range").GetComponent<Collider>();
+        renderers = GetComponentsInChildren<Renderer>();
     }
 
     void Update()
@@ -30,32 +34,47 @@ public class TowerPlacement : MonoBehaviour
         placePosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.transform.position.y - GetComponent<Renderer>().bounds.extents.y));
 
         transform.position = placePosition;
-        isInGame = true;
 
-        if (isInGame && !rendererEnabled)
+        if (!rendererEnabled)
         {
             rendererEnabled = true;
-            GetComponent<Renderer>().enabled = true;
+
+            foreach (Renderer renderer in renderers)
+            {
+                renderer.enabled = true;
+            }
         }
 
-        if (Input.GetMouseButtonUp(0) && isInGameRange)
+        if (Input.GetMouseButtonUp(0) && isInGameRange && canPlace)
         {
-            if (canPlace)
-            {
-                GetComponent<BoxCollider>().isTrigger = true;
-                tag = "Tower";
-                GameObject.Find("Money").GetComponent<MoneyHandler>().money -= price;
-                GetComponent<TowerPlacement>().enabled = false;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            tag = "Tower";
+            GetComponent<BoxCollider>().isTrigger = true;
+            GameObject.Find("Money").GetComponent<MoneyHandler>().money -= price;
+            GetComponentInChildren<ProjectileSpawning>().enabled = true;
+            renderers[1].enabled = false;
+            GetComponent<TowerUpgrading>().enabled = true;
+            GetComponent<TowerPlacement>().enabled = false;
         }
 
         if (Input.GetMouseButtonUp(1))
         {
             Destroy(gameObject);
+        }
+
+        if (colliders.Count > 0)
+        {
+            canPlace = false;
+            towerRangeCircle.color = Color.red;
+        }
+        else if (colliders.Count == 0 && isInGameRange)
+        {
+            canPlace = true;
+            towerRangeCircle.color = Color.white;
+        }
+        else
+        {
+            canPlace = false;
+            towerRangeCircle.color = Color.red;
         }
     }
 
@@ -65,14 +84,10 @@ public class TowerPlacement : MonoBehaviour
         {
             isInGameRange = true;
         }
-        
-        if (isInGameRange)
+
+        if (other.CompareTag("Tower") || other.CompareTag("Enemy") || other.CompareTag("Path"))
         {
-            if (other == other.CompareTag("Tower") || other == other.CompareTag("Enemy") || other == other.CompareTag("Path"))
-            {
-                GetComponent<Renderer>().enabled = false;
-                canPlace = false;
-            }
+            colliders.Add(other);
         }
     }
 
@@ -83,13 +98,9 @@ public class TowerPlacement : MonoBehaviour
             isInGameRange = false;
         }
 
-        if (isInGameRange)
+        if (other.CompareTag("Tower") || other.CompareTag("Enemy") || other.CompareTag("Path"))
         {
-            if (other == other.CompareTag("Tower") || other == other.CompareTag("Enemy") || other == other.CompareTag("Path"))
-            {
-                GetComponent<Renderer>().enabled = true;
-                canPlace = true;
-            }
+            colliders.Remove(other);
         }
     }
 }

@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using TMPro;
 
 public class TowerSpawning : MonoBehaviour
 {
     [SerializeField] private GameObject tower;
     private GameObject instantiatedTower;
 
+    private int damage;
     private int price;
+    [SerializeField] private int priceMultiplier = 100;
 
     void Start()
     {
-        price = GetComponentInChildren<TowerPriceHandler>().price;
+        damage = tower.GetComponentInChildren<TowerPlacement>().damage;
+
+        price = damage * priceMultiplier;
+
+        GetComponentInChildren<TextMeshProUGUI>().text = price.ToString();
     }
 
     void Update()
@@ -29,8 +37,10 @@ public class TowerSpawning : MonoBehaviour
 
     public void SpawnTower()
     {
+        Destroy(GameObject.FindGameObjectWithTag("Unspawned Tower"));
+
         instantiatedTower = Instantiate(tower);
 
-        instantiatedTower.GetComponent<TowerPlacement>().price = price;
+        instantiatedTower.GetComponentInChildren<TowerPlacement>().price = price;
     }
 }

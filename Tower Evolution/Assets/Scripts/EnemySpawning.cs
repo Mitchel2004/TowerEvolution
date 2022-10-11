@@ -16,7 +16,7 @@ public class EnemySpawning : MonoBehaviour
 
     [SerializeField] private int enemiesToSpawn = 4;
     [SerializeField] private int enemiesToAdd = 2;  
-    [SerializeField] private float spawnInterval = 1f;
+    [SerializeField] public float spawnInterval = 1f;
 
     private bool needToSpawn = true;
     private int currentWave = 0;
@@ -48,19 +48,27 @@ public class EnemySpawning : MonoBehaviour
 
     void Update()
     {
-        if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0 && needToSpawn)
+        if (GameObject.FindGameObjectsWithTag("Tower").Length > 0)
         {
-            needToSpawn = false;
-            currentWave++;
-            enemiesToSpawn += enemiesToAdd;
-            GameObject.Find("Wave & Enemies").GetComponent<TextMeshProUGUI>().text = $"Wave: {currentWave}\nEnemies: {enemiesToSpawn}";
-            StartCoroutine(SpawnEnemies());
-        }
+            if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0 && needToSpawn)
+            {
+                needToSpawn = false;
+                currentWave++;
+                enemiesToSpawn += enemiesToAdd;
+                GameObject.Find("Wave & Enemies").GetComponent<TextMeshProUGUI>().text = $"Wave: {currentWave}\nEnemies: {enemiesToSpawn}";
+                StartCoroutine(SpawnEnemies());
+            }
 
-        if (enemiesToSpawn == 1000000000)
+            if (enemiesToSpawn >= 1000000000)
+            {
+                enemiesToSpawn = 1000000000;
+                enemiesToAdd = 0;
+                GameObject.Find("Wave & Enemies").GetComponent<TextMeshProUGUI>().text = $"Wave: {currentWave}\nEnemies: <color=#C00000>{enemiesToSpawn}</color>";
+            }
+        }
+        else
         {
-            enemiesToAdd = 0;
-            Debug.Log("Maximum Amount of Enemies Reached");
+            GameObject.Find("Wave & Enemies").GetComponent<TextMeshProUGUI>().text = $"Place a tower\nto start";
         }
     }
 
