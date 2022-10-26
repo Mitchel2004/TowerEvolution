@@ -127,7 +127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 3452989779278414271, guid: 18767127419de2a47bf1de62ddb19101, type: 3}
-  enemiesInRange: []
   spawnInterval: 0.5
 --- !u!1 &6797434344914213932
 GameObject:
@@ -145,7 +144,7 @@ GameObject:
   - component: {fileID: 6876216178468259226}
   - component: {fileID: -710772111345716084}
   m_Layer: 3
-  m_Name: Tower
+  m_Name: Tower 2
   m_TagString: Unspawned Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -258,7 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerRangeCircle: {fileID: 2100000, guid: 634f2792d9067d045a8d5338f2a42965, type: 2}
   renderers: []
-  damage: 1
+  damage: 2
   price: 0
 --- !u!114 &-710772111345716084
 MonoBehaviour:

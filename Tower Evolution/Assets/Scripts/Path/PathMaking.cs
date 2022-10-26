@@ -40,7 +40,7 @@ public class PathMaking : MonoBehaviour
         {
             instantiatedPathEnd = Instantiate(pathEnd, routepoints[i]);
 
-            instantiatedPathEnd.transform.position = new Vector3(instantiatedPathEnd.transform.position.x, 0, instantiatedPathEnd.transform.position.z);
+            instantiatedPathEnd.transform.position = new Vector3(instantiatedPathEnd.transform.position.x, 0.001f, instantiatedPathEnd.transform.position.z);
         }
     }
 }

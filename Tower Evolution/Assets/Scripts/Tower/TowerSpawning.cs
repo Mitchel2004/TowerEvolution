@@ -16,7 +16,7 @@ public class TowerSpawning : MonoBehaviour
 
     void Start()
     {
-        damage = tower.GetComponentInChildren<TowerPlacement>().damage;
+        damage = tower.GetComponent<TowerPlacement>().damage;
 
         price = damage * priceMultiplier;
 

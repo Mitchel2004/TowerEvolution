@@ -87,6 +87,8 @@ public class EnemySpawning : MonoBehaviour
 
     IEnumerator SpawnEnemies()
     {
+        yield return new WaitForSeconds(1);
+
         for (int i = 0; i < enemiesToSpawn; i++)
         {
             enemyReadyToSpawn = GetInactiveEnemy();

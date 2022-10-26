@@ -5,7 +5,7 @@ using TMPro;
 
 public class MoneyHandler : MonoBehaviour
 {
-    public int money = 0;
+    public int money = 250;
 
     void Update()
     {

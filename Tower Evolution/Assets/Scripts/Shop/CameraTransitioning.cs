@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraTransitioning : MonoBehaviour
 {
     private Animator cameraTransitioning;
-    private bool isIn3D = true;
+    public bool isIn3D = true;
 
     void Start()
     {

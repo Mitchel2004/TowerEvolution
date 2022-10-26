@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    private List<Transform> waypoints = new List<Transform>();
-    private int index = 0;
+    public List<Transform> waypoints = new List<Transform>();
+    public int index = 0;
 
     public Quaternion startRotation;
 
@@ -30,6 +30,7 @@ public class EnemyMovement : MonoBehaviour
         if (Vector3.Distance(transform.position, waypoints[waypoints.Count - 1].position) <= 0.001f)
         {
             GameObject.Find("Health Bar").GetComponent<PlayerHealth>().playerHealth -= 1;
+            GetComponentInChildren<EnemyHealth>().enemyHealth = GetComponentInChildren<EnemyHealth>().totalEnemyHealth;
             index = 0;
             gameObject.SetActive(false);
         }

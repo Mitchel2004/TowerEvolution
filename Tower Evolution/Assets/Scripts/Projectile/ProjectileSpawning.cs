@@ -12,7 +12,7 @@ public class ProjectileSpawning : MonoBehaviour
     private List<GameObject> projectilePool = new List<GameObject>();
     private List<GameObject> enemiesInRange = new List<GameObject>();
 
-    [SerializeField] private int poolSize;
+    private int poolSize;
 
     [SerializeField] public float spawnInterval = 0.5f;
 
@@ -23,6 +23,8 @@ public class ProjectileSpawning : MonoBehaviour
 
     void Start()
     {
+        poolSize = Mathf.CeilToInt(GetComponent<Renderer>().bounds.extents.x / projectile.GetComponent<ProjectileMovement>().speed / spawnInterval + 1);
+        
         for (int i = 0; i < poolSize; i++)
         {
             projectilePool.Add(Instantiate(projectile, transform.parent.gameObject.transform));
@@ -32,21 +34,19 @@ public class ProjectileSpawning : MonoBehaviour
 
     void Update()
     {
+        GetNearestEnemy();
+
         if (needToSpawn && enemiesInRange.Count > 0)
         {
             needToSpawn = false;
             StartCoroutine(SpawnProjectiles());
         }
 
-        foreach (GameObject enemy in enemiesInRange)
+        if (nearestEnemy != null && !nearestEnemy.activeInHierarchy)
         {
-            difference = enemy.transform.position - transform.position;
-
-            if (difference.sqrMagnitude < distance)
-            {
-                nearestEnemy = enemy;
-                distance = difference.sqrMagnitude;
-            }
+            enemiesInRange.Remove(nearestEnemy);
+            nearestEnemy = null;
+            distance = Mathf.Infinity;
         }
     }
 
@@ -65,9 +65,30 @@ public class ProjectileSpawning : MonoBehaviour
             if (other.gameObject == nearestEnemy)
             {
                 nearestEnemy = null;
+                distance = Mathf.Infinity;
             }
 
             enemiesInRange.Remove(other.gameObject);
+        }
+    }
+
+    void GetNearestEnemy()
+    {
+        foreach (GameObject enemy in enemiesInRange)
+        {
+            difference = enemy.transform.position - transform.position;
+
+            if (difference.sqrMagnitude < distance)
+            {
+                distance = difference.sqrMagnitude;
+                nearestEnemy = enemy;
+            }
+        }
+
+        //Point to the nearest enemy
+        if (nearestEnemy != null)
+        {
+            Debug.DrawLine(transform.position, nearestEnemy.transform.position, Color.red, 0.001f);
         }
     }
 
