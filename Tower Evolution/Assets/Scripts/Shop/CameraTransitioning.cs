@@ -9,7 +9,7 @@ public class CameraTransitioning : MonoBehaviour
 
     void Start()
     {
-        cameraTransitioning = Camera.main.GetComponent<Animator>();
+        cameraTransitioning = Camera.main.transform.parent.GetComponent<Animator>();
     }
 
     public void TransitionCamera()

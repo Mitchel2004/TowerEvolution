@@ -24,14 +24,12 @@ public class DirectionPositioning : MonoBehaviour
 
         instantiatedStartPoint = Instantiate(startPoint, transform);
 
-        instantiatedStartPoint.transform.position = transform.position;
-        instantiatedStartPoint.transform.position = new Vector3(instantiatedStartPoint.transform.position.x, 0.003f, instantiatedStartPoint.transform.position.z);
+        instantiatedStartPoint.transform.position = new Vector3(transform.position.x, 0.003f, transform.position.z);
         instantiatedStartPoint.transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, routepoints[1].position - transform.position, 1000 * Time.deltaTime, 0f));
 
         instantiatedEndPoint = Instantiate(endPoint, transform);
 
-        instantiatedEndPoint.transform.position = routepoints[routepoints.Count - 1].position;
-        instantiatedEndPoint.transform.position = new Vector3(instantiatedEndPoint.transform.position.x, 0.003f, instantiatedEndPoint.transform.position.z);
+        instantiatedEndPoint.transform.position = new Vector3(routepoints[routepoints.Count - 1].position.x, 0.003f, routepoints[routepoints.Count - 1].position.z);
         instantiatedEndPoint.transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(routepoints[routepoints.Count - 1].forward, routepoints[routepoints.Count - 1].position - routepoints[routepoints.Count - 2].position, 1000 * Time.deltaTime, 0f));
     }
 }

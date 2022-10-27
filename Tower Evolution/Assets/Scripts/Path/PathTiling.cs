@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PathTiling : MonoBehaviour
 {
-    private new Renderer renderer;
+    private Renderer pathRenderer;
     
     private List<Material> materials = new List<Material>();
 
@@ -12,12 +12,12 @@ public class PathTiling : MonoBehaviour
 
     void Start()
     {
-        renderer = GetComponent<Renderer>();
+        pathRenderer = GetComponent<Renderer>();
 
-        newMaterial = new Material(renderer.material);
+        newMaterial = new Material(pathRenderer.material);
         newMaterial.mainTextureScale = new Vector2(1, transform.localScale.y);
         materials.Add(newMaterial);
 
-        renderer.materials = materials.ToArray();
+        pathRenderer.materials = materials.ToArray();
     }
 }
