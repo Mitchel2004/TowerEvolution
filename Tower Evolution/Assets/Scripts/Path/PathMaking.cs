@@ -10,7 +10,7 @@ public class PathMaking : MonoBehaviour
     [SerializeField] private GameObject pathEnd;
     private GameObject instantiatedPathEnd;
 
-    private List<Transform> routepoints = new List<Transform>();
+    public List<Transform> routepoints = new List<Transform>();
 
     private float scale;
 

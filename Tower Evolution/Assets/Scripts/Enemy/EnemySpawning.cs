@@ -15,7 +15,8 @@ public class EnemySpawning : MonoBehaviour
     private int poolSize;
 
     [SerializeField] private int enemiesToSpawn = 4;
-    [SerializeField] private int enemiesToAdd = 2;  
+    [SerializeField] private int enemiesToAdd = 2;
+    private int enemiesToMultiply;
     [SerializeField] public float spawnInterval = 1f;
 
     private bool needToSpawn = true;
@@ -23,6 +24,8 @@ public class EnemySpawning : MonoBehaviour
 
     void Start()
     {
+        enemiesToMultiply = enemiesToAdd;
+
         routepoints.Add(transform);
 
         foreach (GameObject waypoint in GameObject.FindGameObjectsWithTag("Waypoint"))
@@ -87,8 +90,6 @@ public class EnemySpawning : MonoBehaviour
 
     IEnumerator SpawnEnemies()
     {
-        yield return new WaitForSeconds(1);
-
         for (int i = 0; i < enemiesToSpawn; i++)
         {
             enemyReadyToSpawn = GetInactiveEnemy();
@@ -100,6 +101,11 @@ public class EnemySpawning : MonoBehaviour
                 enemyReadyToSpawn.transform.rotation = enemy.GetComponent<EnemyMovement>().startRotation;
                 enemyReadyToSpawn.SetActive(true);
             }
+        }
+
+        if (currentWave % 5 == 0)
+        {
+            enemiesToAdd += enemiesToMultiply;
         }
 
         needToSpawn = true;
