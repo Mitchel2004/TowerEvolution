@@ -10,17 +10,20 @@ public class PathMaking : MonoBehaviour
     [SerializeField] private GameObject pathEnd;
     private GameObject instantiatedPathEnd;
 
+    private GameObject waypointContainer;
     public List<Transform> routepoints = new List<Transform>();
 
     private float scale;
 
     void Start()
     {
+        waypointContainer = GameObject.Find("Waypoints");
+
         routepoints.Add(transform);
 
-        foreach (GameObject waypoint in GameObject.FindGameObjectsWithTag("Waypoint"))
+        foreach (Transform waypoint in waypointContainer.transform)
         {
-            routepoints.Add(waypoint.transform);
+            routepoints.Add(waypoint);
         }
 
         for (int i = 0; i < routepoints.Count - 1; i++)

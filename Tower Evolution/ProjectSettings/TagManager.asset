@@ -10,6 +10,7 @@ TagManager:
   - Path
   - Unspawned Tower
   - Spawnpoint
+  - Direction
   layers:
   - Default
   - TransparentFX

@@ -18,7 +18,7 @@ public class TowerUpgrading : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && GameObject.FindGameObjectsWithTag("Unspawned Tower").Length == 0)
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 

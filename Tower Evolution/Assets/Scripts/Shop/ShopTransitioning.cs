@@ -29,6 +29,7 @@ public class ShopTransitioning : MonoBehaviour
         else
         {
             isClosed = true;
+            Destroy(GameObject.FindGameObjectWithTag("Unspawned Tower"));
             shopTransitioning.SetTrigger("close");
             GetComponentInChildren<TextMeshProUGUI>().text = "Shop";
 

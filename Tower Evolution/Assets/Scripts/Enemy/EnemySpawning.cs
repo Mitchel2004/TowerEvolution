@@ -53,6 +53,11 @@ public class EnemySpawning : MonoBehaviour
     {
         if (GameObject.FindGameObjectsWithTag("Tower").Length > 0)
         {
+            foreach (GameObject direction in GameObject.FindGameObjectsWithTag("Direction"))
+            {
+                Destroy(direction);
+            }
+
             if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0 && needToSpawn)
             {
                 needToSpawn = false;
@@ -71,7 +76,7 @@ public class EnemySpawning : MonoBehaviour
         }
         else
         {
-            GameObject.Find("Wave & Enemies").GetComponent<TextMeshProUGUI>().text = $"Place a tower\nto start";
+            GameObject.Find("Wave & Enemies").GetComponent<TextMeshProUGUI>().text = "Place a tower\nto start";
         }
     }
 

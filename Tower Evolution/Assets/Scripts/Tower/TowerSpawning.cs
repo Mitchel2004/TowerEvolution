@@ -28,10 +28,12 @@ public class TowerSpawning : MonoBehaviour
         if (GameObject.Find("Money").GetComponent<MoneyHandler>().money < price)
         {
             GetComponent<Button>().interactable = false;
+            GetComponentInChildren<TextMeshProUGUI>().color = new Color32(192, 0, 0, 255);
         }
         else
         {
             GetComponent<Button>().interactable = true;
+            GetComponentInChildren<TextMeshProUGUI>().color = Color.black;
         }
     }
 
