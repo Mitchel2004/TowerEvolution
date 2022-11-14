@@ -24,6 +24,7 @@ public class EnemyHealth : MonoBehaviour
         {
             enemyHealth = totalEnemyHealth;
             GameObject.Find("Money").GetComponent<MoneyHandler>().money += killEarnings;
+            GameObject.Find("Health Bar").GetComponent<PlayerHealth>().enemiesKilled += 1;
             GetComponentInParent<EnemyMovement>().index = 0;
             transform.parent.gameObject.SetActive(false);
         }

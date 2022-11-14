@@ -25,6 +25,11 @@ public class EnemyMovement : MonoBehaviour
         transform.rotation = startRotation;
     }
 
+    void OnEnable()
+    {
+        transform.rotation = startRotation;
+    }
+
     void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, waypoints[index].position, speed * Time.deltaTime);

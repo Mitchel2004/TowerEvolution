@@ -20,7 +20,7 @@ public class EnemySpawning : MonoBehaviour
     [SerializeField] public float spawnInterval = 1f;
 
     private bool needToSpawn = true;
-    private int currentWave = 0;
+    public int currentWave = 0;
 
     void Start()
     {
@@ -103,7 +103,6 @@ public class EnemySpawning : MonoBehaviour
             {
                 yield return new WaitForSeconds(spawnInterval);
                 enemyReadyToSpawn.transform.position = transform.position;
-                enemyReadyToSpawn.transform.rotation = enemy.GetComponent<EnemyMovement>().startRotation;
                 enemyReadyToSpawn.SetActive(true);
             }
         }

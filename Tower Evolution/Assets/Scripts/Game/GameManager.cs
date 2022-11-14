@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private void Awake()
+    {
+        Time.timeScale = 1;
+    }
+
     void Start()
     {
         if (SceneManager.GetActiveScene().buildIndex == 0)
@@ -33,6 +38,11 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 1;
         }
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadSceneAsync(0);
     }
 
     public void Quit()

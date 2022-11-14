@@ -50,6 +50,7 @@ public class TowerPlacement : MonoBehaviour
             tag = "Tower";
             GetComponent<BoxCollider>().isTrigger = true;
             GameObject.Find("Money").GetComponent<MoneyHandler>().money -= price;
+            GameObject.Find("Health Bar").GetComponent<PlayerHealth>().towersPlaced += 1;
             GetComponentInChildren<ProjectileSpawning>().enabled = true;
             renderers[1].enabled = false;
             GetComponent<TowerUpgrading>().enabled = true;
@@ -58,13 +59,8 @@ public class TowerPlacement : MonoBehaviour
 
         if (Input.GetMouseButtonUp(1))
         {
+            towerRangeCircle.color = Color.white;
             Destroy(gameObject);
-        }
-
-        if (colliders.Count > 0)
-        {
-            canPlace = false;
-            towerRangeCircle.color = Color.red;
         }
         else if (colliders.Count == 0 && isInGameRange)
         {

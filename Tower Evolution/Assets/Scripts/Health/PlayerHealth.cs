@@ -9,9 +9,18 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] public float playerHealth = 100f;
     private float totalPlayerHealth;
 
+    [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private GameObject gameStatsText;
+    [SerializeField] private Button playAgain;
+
+    private int currentWave;
+    public int enemiesKilled = 0;
+    public int towersPlaced = 0;
+
     void Start()
     {
         totalPlayerHealth = playerHealth;
+        currentWave = GameObject.FindGameObjectWithTag("Spawnpoint").GetComponent<EnemySpawning>().currentWave;
     }
 
     void Update()
@@ -20,7 +29,11 @@ public class PlayerHealth : MonoBehaviour
         {
             GetComponent<RectTransform>().localScale = new Vector3(0, 1, 1);
             GameObject.Find("Health Percentage").GetComponent<TextMeshProUGUI>().text = "0%";
-            Debug.Log("Game Over");
+
+            gameOverScreen.SetActive(true);
+            gameStatsText.GetComponent<TextMeshProUGUI>().text = $"Wave: {currentWave}\nEnemies Killed: {enemiesKilled}\nTowers Placed: {towersPlaced}";
+            playAgain.Select();
+            Time.timeScale = 0;
         }
         else
         {
