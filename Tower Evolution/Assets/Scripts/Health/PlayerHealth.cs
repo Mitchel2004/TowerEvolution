@@ -20,11 +20,12 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         totalPlayerHealth = playerHealth;
-        currentWave = GameObject.FindGameObjectWithTag("Spawnpoint").GetComponent<EnemySpawning>().currentWave;
     }
 
     void Update()
     {
+        currentWave = GameObject.FindGameObjectWithTag("Spawnpoint").GetComponent<EnemySpawning>().currentWave;
+
         if (playerHealth <= 0)
         {
             GetComponent<RectTransform>().localScale = new Vector3(0, 1, 1);
